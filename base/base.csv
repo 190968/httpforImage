@@ -1,0 +1,13 @@
+id,cost,size,brand,color,gender,model,image
+1,19,40,addidas,blue,men,Enegy boost,a1
+2,19,41,addidas,green,men,Enegy boost,a2
+3,20,42,addidas,red,men,Enegy boost,a3
+4,7,43,addidas,yellow,men,Enegy boost,a4
+5,100,44,addidas,white,men,Enegy boost,a5
+6,31,40,addidas,blue,women,Enegy boost,a6
+7,45,41,addidas,green,women,Enegy boost,a7
+8,58,42,addidas,red,women,Enegy boost,a8
+9,62,43,addidas,yellow,women,Enegy boost,a9
+10,14,44,addidas,white,men,Enegy boost,a10
+11,42,41,addidas,black,men,Enegy boost,a11
+12,67,39,addidas,green,men,Enegy boost,a12
