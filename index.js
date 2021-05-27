@@ -1,12 +1,12 @@
-var express = require('express');
-var fs = require('fs');
-var app = express();
-var path = require("path");
-var cors = require("cors");
+const express = require('express');
+const fs = require('fs');
+const app = express();
+const path = require("path");
+const cors = require("cors");
 app.use(cors());
 const Mongoclient = require("mongodb").MongoClient;
-var bodyParser = require('body-parser');
-var csv = require('csvtojson');
+const bodyParser = require('body-parser');
+const csv = require('csvtojson');
 
 const uri = "mongodb+srv://alex:alex@cluster0alex-mvffj.gcp.mongodb.net/my?retryWrites=true";
 app.use(bodyParser.json({ inflate: true, limit: '2000kb', type: 'txt/csv'}));
@@ -57,36 +57,27 @@ app.get('/rename_folder', (req,res) => {
         res.send(`${req.query.new_name}`);
     });
 });
-
-
-
 //upload files to server
 app.use(bodyParser.json({ inflate: true, limit: '2000kb', type: 'image/jpeg'}));
 app.post("/upload",  (req, res) =>  {
     console.log('upload');
-   const buf = Buffer.from(req.body.file,'base64');
-   
+   const buf = Buffer.from(req.body.file,'base64');   
     fs.writeFile(path.join(__dirname, 'members',`${req.query.member}`,`${req.query.folder}`,`${req.query.file_name}`),buf,(err)=>{
         if ( err ) throw err;      
     }); 
     res.send(buf);
 });
-
 app.use('/', function(req,res,next){
     console.log(req.hostname,req.ip);
     next();
-});   
-
-
-        
-
- //delete dir
+});
+//delete dir
 app.get('/deletedir',(req,res) => {
-    fs.unlink(path.join(__dirname, 'members',`${req.query.member}`,`${req.query.name}`), (err)=>{
+    fs.unlink(path.join(__dirname, 'members',`${req.query.member}`,`${req.query.name}`),(err)=>{
     if ( err ) { 
         res.send("no deleted");
     } else {
-    console.log(`Catalog  ${req.query.name}  for member ${req.query.member} deleted`);
+        console.log(`Catalog  ${req.query.name}  for member ${req.query.member} deleted`);
         res.send("deleted");
     }
     });
@@ -131,20 +122,15 @@ app.get('/main', (req,res) => {
 app.get(/inside/, (req,res) => {     
     res.sendFile(path.join(__dirname,'index.html'));
 });
-
-
 app.get(/jpg||jpeg||png/,(req,res) => {
     console.log(req.path);
     res.sendFile(path.join(__dirname,req.path));
 });
 
-
 app.get('/./',(req,res) => {  
     console.log(req.path) ; 
      res.sendFile(path.join(__dirname,req.path));
 });
-
-app.use(cors());
 
 const port = process.env.PORT || 3004;
 app.listen(port, (err)=>{
